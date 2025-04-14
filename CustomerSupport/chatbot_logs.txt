@@ -1,0 +1,28 @@
+User: user1
+Message: hi
+Response: Hello! How can I help you?
+--------------------- 
+User: user1
+Message: jajaja
+Response: Sorry, I could'nt understand your message, Can you write it again?
+--------------------- 
+User: user1
+Message: error
+Response: So sorry about that, I will generate a Ticket for you. Could you provide to me more details?
+--------------------- 
+User: user1
+Message: jaahsjsaa
+Response: Sorry, I could'nt understand your message, Can you write it again?
+--------------------- 
+User: user1
+Message: hola
+Response: Sorry, I could'nt understand your message, Can you write it again?
+--------------------- 
+User: user1
+Message: problem
+Response: So sorry about that, I will generate a Ticket for you. Could you provide to me more details?
+--------------------- 
+User: user1
+Message: mistake
+Response: Sorry, I could'nt understand your message, Can you write it again?
+--------------------- 

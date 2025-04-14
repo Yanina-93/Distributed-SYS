@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_package = "com.customersupport.ticketing";
+option java_outer_classname = "TicketingProto";
+
+service TicketingService {
+  // RPC simple
+  rpc CreateTicket (TicketRequest) returns (TicketResponse);
+  rpc GetTicketStatus (TicketStatusRequest) returns (TicketStatusResponse);
+
+  // Server Streaming
+  rpc CreateTicketStream (TicketRequest) returns (stream TicketResponse);
+
+  // Client Streaming
+  rpc CheckMultipleStatuses (stream TicketStatusRequest) returns (TicketStatusBatchResponse);
+}
+
+message TicketRequest {
+  string user_id = 1;
+  string issue_description = 2;
+}
+
+message TicketResponse {
+  string ticket_id = 1;
+  string status = 2;
+}
+
+message TicketStatusRequest {
+  string ticket_id = 1;
+}
+
+message TicketStatusResponse {
+  string status = 1;
+}
+
+message TicketStatusBatchResponse {
+  repeated string statuses = 1;
+}
+
