@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_package = "com.customersupport.chatbot";
+option java_outer_classname = "ChatbotProto";
+
+service ChatbotService {
+  rpc SendMessage (ChatRequest) returns (ChatResponse);
+}
+
+message ChatRequest {
+  string user_id = 1;
+  string message = 2;
+}
+
+message ChatResponse {
+  string reply = 1;
+  bool escalate = 2;
+}
+
