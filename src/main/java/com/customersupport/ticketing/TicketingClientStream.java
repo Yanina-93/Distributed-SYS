@@ -26,35 +26,35 @@ public class TicketingClientStream {
 
         TicketingProto.TicketRequest request = TicketingProto.TicketRequest.newBuilder()
                 .setUserId("user42")
-                .setIssueDescription("Problema al cargar la página")
+                .setIssueDescription("Problem loading the page")
                 .build();
 
-        System.out.println("🟢 Enviando solicitud de creación de tickets...");
+        System.out.println("🟢 Sending request of creating tickets...");
 
         asyncStub.createTicketStream(request, new StreamObserver<TicketingProto.TicketResponse>() {
             @Override
             public void onNext(TicketingProto.TicketResponse response) {
-                System.out.println("📩 Ticket generado:");
+                System.out.println("📩 Ticket generade:");
                 System.out.println(" - ID: " + response.getTicketId());
-                System.out.println(" - Estado: " + response.getStatus());
+                System.out.println(" - Status: " + response.getStatus());
                 System.out.println("-----------------------------");
             }
 
             @Override
             public void onError(Throwable t) {
-                System.err.println("❌ Error durante el streaming: " + t.getMessage());
+                System.err.println("❌ Error in streaming: " + t.getMessage());
             }
 
             @Override
             public void onCompleted() {
-                System.out.println("✅ Todos los tickets generados.");
+                System.out.println("✅ All the tickets generated.");
                 channel.shutdown();
             }
         });
 
-        // Esperar para que se reciba todo el streaming antes de que el programa termine
+        // Wait for the streaming
         try {
-            Thread.sleep(5000); // Ajustar si se generan más tickets
+            Thread.sleep(5000); // change if the numbers of tickets got bigger
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
