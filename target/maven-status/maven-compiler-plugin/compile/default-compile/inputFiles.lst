@@ -1,8 +1,12 @@
 C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\chatbot\ChatbotProto.java
+C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\ticketing\TicketingClientStream.java
+C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\ticketing\TicketingClient.java
 C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\ticketing\TicketingProto.java
 C:\NetBeansProjects\CustomerSupport\src\main\java\distsys\customersupport\CustomerSupport.java
 C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\ticketing\TicketingServiceGrpc.java
+C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\sentiment\SentimentServiceGrpc.java
 C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\ticketing\TicketingServer.java
 C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\chatbot\ChatbotServer.java
 C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\chatbot\ChatbotClient.java
+C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\sentiment\SentimentProto.java
 C:\NetBeansProjects\CustomerSupport\src\main\java\com\customersupport\chatbot\ChatbotServiceGrpc.java
