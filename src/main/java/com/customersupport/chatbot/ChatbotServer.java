@@ -82,7 +82,7 @@ public class ChatbotServer {
             } else if(userMessage.contains("Thanks") || userMessage.contains("thank you")){
                 reply = "No worries. I'm here to help you";
             } else {
-                reply = "Sorry, I could'nt understand your message, Can you write it again?";
+                reply = "Sorry, I couldn't understand your message, Can you write it again?";
             }
 
             ChatbotProto.ChatResponse response = ChatbotProto.ChatResponse.newBuilder()

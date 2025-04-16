@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "com.customersupport.sentiment";
+option java_outer_classname = "SentimentProto";
+
+service SentimentService {
+  // Bi-directional streaming
+  rpc AnalyzeSentiments (stream SentimentRequest) returns (stream SentimentResponse);
+}
+
+message SentimentRequest {
+  string user_id = 1;
+  string phrase = 2;
+}
+
+message SentimentResponse {
+  string phrase = 1;
+  string sentiment = 2;
+}
+
