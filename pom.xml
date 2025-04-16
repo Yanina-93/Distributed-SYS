@@ -47,10 +47,16 @@
 		<!--  added this to resolve issue with javax.annotation not found -->
 		<dependency>
 			 <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-             <version>1.2</version>
+                         <artifactId>javax.annotation-api</artifactId>
+                         <version>1.2</version>
 
 		</dependency>
+                <dependency>
+                        <groupId>com.auth0</groupId>
+                        <artifactId>java-jwt</artifactId>
+                        <version>4.4.0</version>
+                </dependency>
+
 
 
 	</dependencies>
