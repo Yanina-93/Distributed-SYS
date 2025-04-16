@@ -13,15 +13,22 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.io.FileWriter;
+import java.util.List;
 import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
 
-//Conecting to ticketing service
+//Connecting to ticketing service
 import com.customersupport.ticketing.TicketingProto;
 import com.customersupport.ticketing.TicketingServiceGrpc;
+
+//Connecting to sentiment service
+import com.customersupport.sentiment.SentimentProto;
+import com.customersupport.sentiment.SentimentServiceGrpc;
 
 
 
@@ -41,16 +48,62 @@ public class ChatbotServer {
     static class ChatbotServiceImpl extends ChatbotServiceGrpc.ChatbotServiceImplBase {/////Change here
         
         private final TicketingServiceGrpc.TicketingServiceBlockingStub ticketingStub;
+        private final SentimentServiceGrpc.SentimentServiceStub sentimentStub;
 
         public ChatbotServiceImpl() {
-            ManagedChannel channel = ManagedChannelBuilder
-                    .forAddress("localhost", 50052) // mismo puerto que TicketingServer
+            
+            //Ticketing
+            ManagedChannel ticketchannel = ManagedChannelBuilder
+                    .forAddress("localhost", 50052) // same port of TicketingServer
                     .usePlaintext()
                     .build();
-            ticketingStub = TicketingServiceGrpc.newBlockingStub(channel);
+            ticketingStub = TicketingServiceGrpc.newBlockingStub(ticketchannel);
+            
+            //Sentiment
+            ManagedChannel sentimentChannel = ManagedChannelBuilder
+                    .forAddress("localhost", 50053) // same port of SentimentServer
+                    .usePlaintext()
+                    .build();
+            sentimentStub = SentimentServiceGrpc.newStub(sentimentChannel);
         }
 
-        
+        public void analyzeEmotionStream(List<String> phrases, String userId){
+            CountDownLatch latch = new CountDownLatch(1);
+            
+            StreamObserver<SentimentProto.SentimentRequest> requestObserver = sentimentStub.analyzeSentiments(new StreamObserver<SentimentProto.SentimentResponse>(){
+                @Override
+                public void onNext(SentimentProto.SentimentResponse response){
+                    System.out.println("[Emotion] \"" + response.getPhrase() + "\"->" + response.getSentiment().toUpperCase());
+                }
+                
+                @Override
+                public void onError(Throwable t){
+                    System.err.println("X Error in analysis: " + t.getMessage());
+                    latch.countDown();
+                }
+                
+                @Override
+                public void onCompleted(){
+                    System.out.println(" Analysis completed.");
+                    latch.countDown();
+                }
+            });
+            
+            for (String phrase : phrases){
+                SentimentProto.SentimentRequest request = SentimentProto.SentimentRequest.newBuilder()
+                        .setUserId(userId)
+                        .setPhrase(phrase)
+                        .build();
+                requestObserver.onNext(request);
+            }
+            
+            requestObserver.onCompleted();
+            try{
+                latch.await(3, TimeUnit.SECONDS);
+            } catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
         
         @Override
         public void sendMessage(ChatbotProto.ChatRequest request,
@@ -59,6 +112,9 @@ public class ChatbotServer {
             String userMessage = request.getMessage().toLowerCase();
             String reply;
             boolean escalate = false;
+            
+            //Get sentiment
+            analyzeEmotionStream(List.of(userMessage), request.getUserId());         
 
             if (userMessage.contains("hello") || userMessage.contains("hi")) {
                 reply = "Hello! How can I help you?";

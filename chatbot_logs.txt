@@ -30,3 +30,15 @@ User: user1
 Message: problem
 Response: So sorry about that. I created a ticket for you. Ticket ID is: ec9787c6-33bb-487a-b4a8-4ba740276103
 --------------------- 
+User: user1
+Message: i have a problem with my account
+Response: So sorry about that. I created a ticket for you. Ticket ID is: 72f02d6d-cac1-4fd6-954c-1fe5a3b3ec5d
+--------------------- 
+User: user1
+Message: Im very happy with the service
+Response: Sorry, I couldn't understand your message, Can you write it again?
+--------------------- 
+User: user1
+Message: i need to speak with an agent
+Response: Sorry, I couldn't understand your message, Can you write it again?
+--------------------- 

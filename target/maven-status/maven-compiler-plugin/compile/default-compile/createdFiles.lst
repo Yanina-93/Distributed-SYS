@@ -12,6 +12,7 @@ com\customersupport\ticketing\TicketingProto$TicketStatusBatchResponseOrBuilder.
 com\customersupport\chatbot\ChatbotServer$ChatbotServiceImpl.class
 com\customersupport\chatbot\ChatbotProto$ChatRequest.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceStub.class
+com\customersupport\chatbot\ChatbotServer$ChatbotServiceImpl$1.class
 com\customersupport\ticketing\TicketingProto$TicketResponse$Builder.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceBaseDescriptorSupplier.class
 com\customersupport\sentiment\SentimentServiceGrpc$SentimentServiceBlockingStub.class

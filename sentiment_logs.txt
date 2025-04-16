@@ -10,3 +10,15 @@ User: user1
 Phrase: blah blah
 Sentiment: neutral
 ---------------------
+User: user1
+Phrase: i have a problem with my account
+Sentiment: neutral
+---------------------
+User: user1
+Phrase: im very happy with the service
+Sentiment: positive
+---------------------
+User: user1
+Phrase: i need to speak with an agent
+Sentiment: neutral
+---------------------
