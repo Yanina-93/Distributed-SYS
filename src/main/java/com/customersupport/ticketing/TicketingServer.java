@@ -16,9 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import io.grpc.Status;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 //Connecting JWT
 import com.customersupport.auth.JwtUtil;
+
+//SQL
+import com.customersupport.ticketing.MySQLUtil;
 
 
 public class TicketingServer{
@@ -62,18 +70,43 @@ public class TicketingServer{
                 return;
             }
             
+            ///String ticketId = UUID.randomUUID().toString();
+            
+            ///Ticket ticket = new Ticket(ticketId, request.getUserId(), request.getIssueDescription());
+            ///ticketList.add(ticket);
+
+            ///System.out.println("New ticket ID: "+ ticketId + " |User: " + request.getUserId());
+
+            ///TicketingProto.TicketResponse response = TicketingProto.TicketResponse.newBuilder()
+            ///        .setTicketId(ticketId)
+            ///        .setStatus(ticket.status)
+            ///        .build();
+            ///responseObserver.onNext(response);
+            ///responseObserver.onCompleted();
+                        
+            //WE RE WRITE THE METHOD FOR THE SQL DATA
             String ticketId = UUID.randomUUID().toString();
-            Ticket ticket = new Ticket(ticketId, request.getUserId(), request.getIssueDescription());
-            ticketList.add(ticket);
-
-            System.out.println("New ticket ID: "+ ticketId + " |User: " + request.getUserId());
-
-            TicketingProto.TicketResponse response = TicketingProto.TicketResponse.newBuilder()
-                    .setTicketId(ticketId)
-                    .setStatus(ticket.status)
-                    .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+            try(Connection conn = MySQLUtil.getConnection()){
+                String sql = "INSERT INTO tickets (id, user_id, description, status) VALUES (?, ?, ?, ?)";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setObject(1, UUID.fromString(sql));
+                ps.setString(2, request.getUserId());
+                ps.setString(3, request.getIssueDescription());
+                ps.setString(4, "Open");
+                ps.executeUpdate();
+                
+                TicketingProto.TicketResponse response = TicketingProto.TicketResponse.newBuilder()
+                        .setTicketId(ticketId)
+                        .setStatus("Open")
+                        .build();
+                
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();                
+            } catch(SQLException e){
+                responseObserver.onError(Status.INTERNAL.withDescription("Error in saving database")
+                .augmentDescription(e.getMessage())
+                .asRuntimeException());
+            }
         }
 
         //RPC Unary -- ticket's status
@@ -86,19 +119,43 @@ public class TicketingServer{
                 return;
             }
             
-            String status =  "Not Found";
-            for(Ticket t : ticketList){
-                if(t.id.equals(request.getTicketId())){
-                    status = t.status;
-                    break;
-                }
-            }
+            ///String status =  "Not Found";
+            ///for(Ticket t : ticketList){
+            ///    if(t.id.equals(request.getTicketId())){
+            ///        status = t.status;
+            ///        break;
+            ///    }
+            ///}
             
-            TicketingProto.TicketStatusResponse response = TicketingProto.TicketStatusResponse.newBuilder()
+            ///TicketingProto.TicketStatusResponse response = TicketingProto.TicketStatusResponse.newBuilder()
+            ///        .setStatus(status)
+            ///        .build();
+            ///responseObserver.onNext(response);
+            ///responseObserver.onCompleted();
+            
+            ///WE REWRITE THE METHOD FOR THE DATABASE
+            
+            try (Connection conn = MySQLUtil.getConnection()) {
+                String sql = "SELECT status FROM tickets WHERE id = ?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setObject(1, UUID.fromString(request.getTicketId()));
+                ResultSet rs = ps.executeQuery();
+
+                String status = rs.next() ? rs.getString("status") : "No encontrado";
+
+                TicketingProto.TicketStatusResponse response = TicketingProto.TicketStatusResponse.newBuilder()
                     .setStatus(status)
                     .build();
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
+
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+
+            } catch (SQLException e) {
+                responseObserver.onError(Status.INTERNAL
+                    .withDescription("Error al consultar la base de datos")
+                    .augmentDescription(e.getMessage())
+                    .asRuntimeException());
+            }
         }
         
         //RPC Server Streaming --Multiple tickets
@@ -110,13 +167,12 @@ public class TicketingServer{
                 responseObserver.onError(Status.UNAUTHENTICATED
                     .withDescription("Invalid Token").asRuntimeException());
                 return;
-            }
-            
+            }            
             for(int i = 0; i < 3; i ++){ //simulation mulple tickets created
                 String ticketId = UUID.randomUUID().toString();
                 Ticket ticket = new Ticket(ticketId, request.getUserId(), request.getIssueDescription() + " #" + (i+1));
                 ticketList.add(ticket);
-
+            
                 System.out.println("New ticket ID: "+ ticketId + " |User: " + request.getUserId());
 
                 TicketingProto.TicketResponse response = TicketingProto.TicketResponse.newBuilder()
@@ -133,6 +189,7 @@ public class TicketingServer{
        
             }
             responseObserver.onCompleted();
+
         }
         
         //RPC Client Streaming -- Multiple checking status       
