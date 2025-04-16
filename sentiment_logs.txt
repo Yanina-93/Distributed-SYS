@@ -1,0 +1,12 @@
+User: user1
+Phrase: im happy
+Sentiment: positive
+---------------------
+User: user1
+Phrase: im sad
+Sentiment: negative
+---------------------
+User: user1
+Phrase: blah blah
+Sentiment: neutral
+---------------------
