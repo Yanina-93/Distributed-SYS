@@ -12,10 +12,13 @@ package com.customersupport.sentiment;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Locale;
+import io.grpc.Status;
+
+//Connecting JWT
+import com.customersupport.auth.JwtUtil;
 
 public class SentimentServer {
    public static void main(String[] args) throws Exception{
@@ -34,6 +37,12 @@ public class SentimentServer {
            return new StreamObserver<SentimentProto.SentimentRequest>(){
                 @Override
                 public void onNext(SentimentProto.SentimentRequest request){
+                                //JWT Validation 
+                    if (!JwtUtil.validateToken(request.getToken())) {
+                        responseObserver.onError(Status.UNAUTHENTICATED
+                            .withDescription("Invalid Token").asRuntimeException());
+                         return;
+                    }
                     String phrase = request.getPhrase().toLowerCase(Locale.ROOT);
                     String result;
                     

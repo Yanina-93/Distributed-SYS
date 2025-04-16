@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+import io.grpc.Status;
+
 
 
 //Connecting to ticketing service
@@ -30,6 +32,8 @@ import com.customersupport.ticketing.TicketingServiceGrpc;
 import com.customersupport.sentiment.SentimentProto;
 import com.customersupport.sentiment.SentimentServiceGrpc;
 
+//Connecting JWT
+import com.customersupport.auth.JwtUtil;
 
 
 public class ChatbotServer {
@@ -45,7 +49,7 @@ public class ChatbotServer {
         server.awaitTermination();
     }
 
-    static class ChatbotServiceImpl extends ChatbotServiceGrpc.ChatbotServiceImplBase {/////Change here
+    static class ChatbotServiceImpl extends ChatbotServiceGrpc.ChatbotServiceImplBase {
         
         private final TicketingServiceGrpc.TicketingServiceBlockingStub ticketingStub;
         private final SentimentServiceGrpc.SentimentServiceStub sentimentStub;
@@ -115,7 +119,14 @@ public class ChatbotServer {
             
             //Get sentiment
             analyzeEmotionStream(List.of(userMessage), request.getUserId());         
-
+            
+            //JWT validation
+            if (!JwtUtil.validateToken(request.getToken())) {
+                responseObserver.onError(Status.UNAUTHENTICATED
+                            .withDescription("Invalid Token").asRuntimeException());
+                return;
+            }
+            
             if (userMessage.contains("hello") || userMessage.contains("hi")) {
                 reply = "Hello! How can I help you?";
                 

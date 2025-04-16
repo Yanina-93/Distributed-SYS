@@ -18,7 +18,7 @@ public class JwtUtil {
     
     private static final String SECRET_KEY = "my_key_secure";
     
-    public static boolean vakidateToken(String token){
+    public static boolean validateToken(String token){
         try{
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
             JWTVerifier verifier = JWT.require(algorithm).build();

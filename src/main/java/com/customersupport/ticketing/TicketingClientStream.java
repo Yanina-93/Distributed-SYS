@@ -34,7 +34,7 @@ public class TicketingClientStream {
         asyncStub.createTicketStream(request, new StreamObserver<TicketingProto.TicketResponse>() {
             @Override
             public void onNext(TicketingProto.TicketResponse response) {
-                System.out.println("📩 Ticket generade:");
+                System.out.println("📩 Ticket generated:");
                 System.out.println(" - ID: " + response.getTicketId());
                 System.out.println(" - Status: " + response.getStatus());
                 System.out.println("-----------------------------");

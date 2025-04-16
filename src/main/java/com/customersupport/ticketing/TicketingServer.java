@@ -15,6 +15,11 @@ import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
+import io.grpc.Status;
+
+//Connecting JWT
+import com.customersupport.auth.JwtUtil;
+
 
 public class TicketingServer{
     public static void main (String[]args) throws IOException, InterruptedException{
@@ -31,7 +36,7 @@ public class TicketingServer{
     //SERVICE
     static class TicketingServiceImpl extends TicketingServiceGrpc.TicketingServiceImplBase{
         private final List<Ticket> ticketList = new ArrayList<>();
-
+        
         //first we define the ticket object
         class Ticket{
             String id;
@@ -49,6 +54,14 @@ public class TicketingServer{
         
         @Override
         public void createTicket(TicketingProto.TicketRequest request, StreamObserver<TicketingProto.TicketResponse> responseObserver){
+            
+            //JWT Validation 
+            if (!JwtUtil.validateToken(request.getToken())) {
+                responseObserver.onError(Status.UNAUTHENTICATED
+                    .withDescription("Invalid Token").asRuntimeException());
+                return;
+            }
+            
             String ticketId = UUID.randomUUID().toString();
             Ticket ticket = new Ticket(ticketId, request.getUserId(), request.getIssueDescription());
             ticketList.add(ticket);
@@ -66,6 +79,13 @@ public class TicketingServer{
         //RPC Unary -- ticket's status
         @Override
         public void getTicketStatus(TicketingProto.TicketStatusRequest request, StreamObserver<TicketingProto.TicketStatusResponse> responseObserver){
+            //JWT Validation 
+            if (!JwtUtil.validateToken(request.getToken())) {
+                responseObserver.onError(Status.UNAUTHENTICATED
+                    .withDescription("Invalid Token").asRuntimeException());
+                return;
+            }
+            
             String status =  "Not Found";
             for(Ticket t : ticketList){
                 if(t.id.equals(request.getTicketId())){
@@ -84,6 +104,14 @@ public class TicketingServer{
         //RPC Server Streaming --Multiple tickets
         @Override
         public void createTicketStream(TicketingProto.TicketRequest request, StreamObserver<TicketingProto.TicketResponse> responseObserver){
+            
+            //JWT Validation 
+            if (!JwtUtil.validateToken(request.getToken())) {
+                responseObserver.onError(Status.UNAUTHENTICATED
+                    .withDescription("Invalid Token").asRuntimeException());
+                return;
+            }
+            
             for(int i = 0; i < 3; i ++){ //simulation mulple tickets created
                 String ticketId = UUID.randomUUID().toString();
                 Ticket ticket = new Ticket(ticketId, request.getUserId(), request.getIssueDescription() + " #" + (i+1));
@@ -116,6 +144,12 @@ public class TicketingServer{
             return new StreamObserver<TicketingProto.TicketStatusRequest>(){
                 @Override
                 public void onNext(TicketingProto.TicketStatusRequest request){
+                    //JWT Validation 
+                    if (!JwtUtil.validateToken(request.getToken())) {
+                        responseObserver.onError(Status.UNAUTHENTICATED
+                            .withDescription("Invalid Token").asRuntimeException());
+                        return;
+                    }
                     String status = "Not found.";
                     
                     for(Ticket t : ticketList) {
