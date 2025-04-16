@@ -14,6 +14,16 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.io.FileWriter;
 import java.io.IOException;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
+
+
+//Conecting to ticketing service
+import com.customersupport.ticketing.TicketingProto;
+import com.customersupport.ticketing.TicketingServiceGrpc;
+
+
 
 public class ChatbotServer {
 
@@ -29,7 +39,19 @@ public class ChatbotServer {
     }
 
     static class ChatbotServiceImpl extends ChatbotServiceGrpc.ChatbotServiceImplBase {/////Change here
+        
+        private final TicketingServiceGrpc.TicketingServiceBlockingStub ticketingStub;
 
+        public ChatbotServiceImpl() {
+            ManagedChannel channel = ManagedChannelBuilder
+                    .forAddress("localhost", 50052) // mismo puerto que TicketingServer
+                    .usePlaintext()
+                    .build();
+            ticketingStub = TicketingServiceGrpc.newBlockingStub(channel);
+        }
+
+        
+        
         @Override
         public void sendMessage(ChatbotProto.ChatRequest request,
                                 StreamObserver<ChatbotProto.ChatResponse> responseObserver) {
@@ -42,8 +64,20 @@ public class ChatbotServer {
                 reply = "Hello! How can I help you?";
                 
             } else if (userMessage.contains("problem") || userMessage.contains("error")) {
-                reply = "So sorry about that, I will generate a Ticket for you. Could you provide to me more details?";
                 escalate = true;
+                
+                //Now we create the ticket for the request
+                TicketingProto.TicketRequest ticketRequest = TicketingProto.TicketRequest.newBuilder()
+                        .setUserId(request.getUserId())
+                        .setIssueDescription(request.getMessage())
+                        .build();
+                
+                TicketingProto.TicketResponse ticketResponse = ticketingStub.createTicket(ticketRequest);
+                String ticketId = ticketResponse.getTicketId();
+                
+                
+                reply = "So sorry about that. I created a ticket for you. Ticket ID is: " + ticketId;
+                
                 
             } else if(userMessage.contains("Thanks") || userMessage.contains("thank you")){
                 reply = "No worries. I'm here to help you";
@@ -73,6 +107,8 @@ public class ChatbotServer {
                 System.err.println("Transcription error: "+ e.getMessage());
             }
         }
+        
+        
     }
 }
 
