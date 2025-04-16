@@ -10,6 +10,7 @@ service ChatbotService {
 message ChatRequest {
   string user_id = 1;
   string message = 2;
+  string token = 99; //JWT
 }
 
 message ChatResponse {

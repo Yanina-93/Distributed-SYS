@@ -16,6 +16,7 @@ com\customersupport\chatbot\ChatbotServer$ChatbotServiceImpl$1.class
 com\customersupport\ticketing\TicketingProto$TicketResponse$Builder.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceBaseDescriptorSupplier.class
 com\customersupport\sentiment\SentimentServiceGrpc$SentimentServiceBlockingStub.class
+com\customersupport\auth\JwtUtil.class
 com\customersupport\ticketing\TicketingProto$TicketStatusResponse$Builder.class
 com\customersupport\ticketing\TicketingServiceGrpc$TicketingServiceFutureStub.class
 com\customersupport\ticketing\TicketingServiceGrpc$TicketingServiceBaseDescriptorSupplier.class

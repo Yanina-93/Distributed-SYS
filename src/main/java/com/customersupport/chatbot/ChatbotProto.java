@@ -37,6 +37,24 @@ public final class ChatbotProto {
      */
     com.google.protobuf.ByteString
         getMessageBytes();
+
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    java.lang.String getToken();
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    com.google.protobuf.ByteString
+        getTokenBytes();
   }
   /**
    * Protobuf type {@code ChatRequest}
@@ -53,6 +71,7 @@ public final class ChatbotProto {
     private ChatRequest() {
       userId_ = "";
       message_ = "";
+      token_ = "";
     }
 
     @java.lang.Override
@@ -89,6 +108,12 @@ public final class ChatbotProto {
               java.lang.String s = input.readStringRequireUtf8();
 
               message_ = s;
+              break;
+            }
+            case 794: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              token_ = s;
               break;
             }
             default: {
@@ -191,6 +216,48 @@ public final class ChatbotProto {
       }
     }
 
+    public static final int TOKEN_FIELD_NUMBER = 99;
+    private volatile java.lang.Object token_;
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    public java.lang.String getToken() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        token_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTokenBytes() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        token_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -211,6 +278,9 @@ public final class ChatbotProto {
       if (!getMessageBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
       }
+      if (!getTokenBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 99, token_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -225,6 +295,9 @@ public final class ChatbotProto {
       }
       if (!getMessageBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
+      }
+      if (!getTokenBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(99, token_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -246,6 +319,8 @@ public final class ChatbotProto {
           .equals(other.getUserId());
       result = result && getMessage()
           .equals(other.getMessage());
+      result = result && getToken()
+          .equals(other.getToken());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -261,6 +336,8 @@ public final class ChatbotProto {
       hash = (53 * hash) + getUserId().hashCode();
       hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
       hash = (53 * hash) + getMessage().hashCode();
+      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
+      hash = (53 * hash) + getToken().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -398,6 +475,8 @@ public final class ChatbotProto {
 
         message_ = "";
 
+        token_ = "";
+
         return this;
       }
 
@@ -426,6 +505,7 @@ public final class ChatbotProto {
         com.customersupport.chatbot.ChatbotProto.ChatRequest result = new com.customersupport.chatbot.ChatbotProto.ChatRequest(this);
         result.userId_ = userId_;
         result.message_ = message_;
+        result.token_ = token_;
         onBuilt();
         return result;
       }
@@ -480,6 +560,10 @@ public final class ChatbotProto {
         }
         if (!other.getMessage().isEmpty()) {
           message_ = other.message_;
+          onChanged();
+        }
+        if (!other.getToken().isEmpty()) {
+          token_ = other.token_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -645,6 +729,95 @@ public final class ChatbotProto {
   checkByteStringIsUtf8(value);
         
         message_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object token_ = "";
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public java.lang.String getToken() {
+        java.lang.Object ref = token_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          token_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTokenBytes() {
+        java.lang.Object ref = token_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          token_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder setToken(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        token_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder clearToken() {
+        
+        token_ = getDefaultInstance().getToken();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder setTokenBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        token_ = value;
         onChanged();
         return this;
       }
@@ -1334,12 +1507,13 @@ public final class ChatbotProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rchatbot.proto\"/\n\013ChatRequest\022\017\n\007user_i" +
-      "d\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\"/\n\014ChatResponse" +
-      "\022\r\n\005reply\030\001 \001(\t\022\020\n\010escalate\030\002 \001(\0102<\n\016Cha" +
-      "tbotService\022*\n\013SendMessage\022\014.ChatRequest" +
-      "\032\r.ChatResponseB+\n\033com.customersupport.c" +
-      "hatbotB\014ChatbotProtob\006proto3"
+      "\n\rchatbot.proto\">\n\013ChatRequest\022\017\n\007user_i" +
+      "d\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022\r\n\005token\030c \001(\t\"" +
+      "/\n\014ChatResponse\022\r\n\005reply\030\001 \001(\t\022\020\n\010escala" +
+      "te\030\002 \001(\0102<\n\016ChatbotService\022*\n\013SendMessag" +
+      "e\022\014.ChatRequest\032\r.ChatResponseB+\n\033com.cu" +
+      "stomersupport.chatbotB\014ChatbotProtob\006pro" +
+      "to3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1358,7 +1532,7 @@ public final class ChatbotProto {
     internal_static_ChatRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ChatRequest_descriptor,
-        new java.lang.String[] { "UserId", "Message", });
+        new java.lang.String[] { "UserId", "Message", "Token", });
     internal_static_ChatResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_ChatResponse_fieldAccessorTable = new

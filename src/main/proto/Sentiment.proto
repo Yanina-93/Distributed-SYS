@@ -11,6 +11,7 @@ service SentimentService {
 message SentimentRequest {
   string user_id = 1;
   string phrase = 2;
+  string token = 99; //JWT
 }
 
 message SentimentResponse {

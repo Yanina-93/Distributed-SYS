@@ -37,6 +37,24 @@ public final class TicketingProto {
      */
     com.google.protobuf.ByteString
         getIssueDescriptionBytes();
+
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    java.lang.String getToken();
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    com.google.protobuf.ByteString
+        getTokenBytes();
   }
   /**
    * Protobuf type {@code TicketRequest}
@@ -53,6 +71,7 @@ public final class TicketingProto {
     private TicketRequest() {
       userId_ = "";
       issueDescription_ = "";
+      token_ = "";
     }
 
     @java.lang.Override
@@ -89,6 +108,12 @@ public final class TicketingProto {
               java.lang.String s = input.readStringRequireUtf8();
 
               issueDescription_ = s;
+              break;
+            }
+            case 794: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              token_ = s;
               break;
             }
             default: {
@@ -191,6 +216,48 @@ public final class TicketingProto {
       }
     }
 
+    public static final int TOKEN_FIELD_NUMBER = 99;
+    private volatile java.lang.Object token_;
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    public java.lang.String getToken() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        token_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTokenBytes() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        token_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -211,6 +278,9 @@ public final class TicketingProto {
       if (!getIssueDescriptionBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, issueDescription_);
       }
+      if (!getTokenBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 99, token_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -225,6 +295,9 @@ public final class TicketingProto {
       }
       if (!getIssueDescriptionBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, issueDescription_);
+      }
+      if (!getTokenBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(99, token_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -246,6 +319,8 @@ public final class TicketingProto {
           .equals(other.getUserId());
       result = result && getIssueDescription()
           .equals(other.getIssueDescription());
+      result = result && getToken()
+          .equals(other.getToken());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -261,6 +336,8 @@ public final class TicketingProto {
       hash = (53 * hash) + getUserId().hashCode();
       hash = (37 * hash) + ISSUE_DESCRIPTION_FIELD_NUMBER;
       hash = (53 * hash) + getIssueDescription().hashCode();
+      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
+      hash = (53 * hash) + getToken().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -398,6 +475,8 @@ public final class TicketingProto {
 
         issueDescription_ = "";
 
+        token_ = "";
+
         return this;
       }
 
@@ -426,6 +505,7 @@ public final class TicketingProto {
         com.customersupport.ticketing.TicketingProto.TicketRequest result = new com.customersupport.ticketing.TicketingProto.TicketRequest(this);
         result.userId_ = userId_;
         result.issueDescription_ = issueDescription_;
+        result.token_ = token_;
         onBuilt();
         return result;
       }
@@ -480,6 +560,10 @@ public final class TicketingProto {
         }
         if (!other.getIssueDescription().isEmpty()) {
           issueDescription_ = other.issueDescription_;
+          onChanged();
+        }
+        if (!other.getToken().isEmpty()) {
+          token_ = other.token_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -645,6 +729,95 @@ public final class TicketingProto {
   checkByteStringIsUtf8(value);
         
         issueDescription_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object token_ = "";
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public java.lang.String getToken() {
+        java.lang.Object ref = token_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          token_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTokenBytes() {
+        java.lang.Object ref = token_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          token_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder setToken(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        token_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder clearToken() {
+        
+        token_ = getDefaultInstance().getToken();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder setTokenBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        token_ = value;
         onChanged();
         return this;
       }
@@ -1401,6 +1574,24 @@ public final class TicketingProto {
      */
     com.google.protobuf.ByteString
         getTicketIdBytes();
+
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    java.lang.String getToken();
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    com.google.protobuf.ByteString
+        getTokenBytes();
   }
   /**
    * Protobuf type {@code TicketStatusRequest}
@@ -1416,6 +1607,7 @@ public final class TicketingProto {
     }
     private TicketStatusRequest() {
       ticketId_ = "";
+      token_ = "";
     }
 
     @java.lang.Override
@@ -1446,6 +1638,12 @@ public final class TicketingProto {
               java.lang.String s = input.readStringRequireUtf8();
 
               ticketId_ = s;
+              break;
+            }
+            case 794: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              token_ = s;
               break;
             }
             default: {
@@ -1514,6 +1712,48 @@ public final class TicketingProto {
       }
     }
 
+    public static final int TOKEN_FIELD_NUMBER = 99;
+    private volatile java.lang.Object token_;
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    public java.lang.String getToken() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        token_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *JWT
+     * </pre>
+     *
+     * <code>string token = 99;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTokenBytes() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        token_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1531,6 +1771,9 @@ public final class TicketingProto {
       if (!getTicketIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, ticketId_);
       }
+      if (!getTokenBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 99, token_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1542,6 +1785,9 @@ public final class TicketingProto {
       size = 0;
       if (!getTicketIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, ticketId_);
+      }
+      if (!getTokenBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(99, token_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1561,6 +1807,8 @@ public final class TicketingProto {
       boolean result = true;
       result = result && getTicketId()
           .equals(other.getTicketId());
+      result = result && getToken()
+          .equals(other.getToken());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1574,6 +1822,8 @@ public final class TicketingProto {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TICKET_ID_FIELD_NUMBER;
       hash = (53 * hash) + getTicketId().hashCode();
+      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
+      hash = (53 * hash) + getToken().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1709,6 +1959,8 @@ public final class TicketingProto {
         super.clear();
         ticketId_ = "";
 
+        token_ = "";
+
         return this;
       }
 
@@ -1736,6 +1988,7 @@ public final class TicketingProto {
       public com.customersupport.ticketing.TicketingProto.TicketStatusRequest buildPartial() {
         com.customersupport.ticketing.TicketingProto.TicketStatusRequest result = new com.customersupport.ticketing.TicketingProto.TicketStatusRequest(this);
         result.ticketId_ = ticketId_;
+        result.token_ = token_;
         onBuilt();
         return result;
       }
@@ -1786,6 +2039,10 @@ public final class TicketingProto {
         if (other == com.customersupport.ticketing.TicketingProto.TicketStatusRequest.getDefaultInstance()) return this;
         if (!other.getTicketId().isEmpty()) {
           ticketId_ = other.ticketId_;
+          onChanged();
+        }
+        if (!other.getToken().isEmpty()) {
+          token_ = other.token_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -1882,6 +2139,95 @@ public final class TicketingProto {
   checkByteStringIsUtf8(value);
         
         ticketId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object token_ = "";
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public java.lang.String getToken() {
+        java.lang.Object ref = token_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          token_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTokenBytes() {
+        java.lang.Object ref = token_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          token_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder setToken(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        token_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder clearToken() {
+        
+        token_ = getDefaultInstance().getToken();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *JWT
+       * </pre>
+       *
+       * <code>string token = 99;</code>
+       */
+      public Builder setTokenBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        token_ = value;
         onChanged();
         return this;
       }
@@ -3126,21 +3472,22 @@ public final class TicketingProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\017ticketing.proto\";\n\rTicketRequest\022\017\n\007us" +
-      "er_id\030\001 \001(\t\022\031\n\021issue_description\030\002 \001(\t\"3" +
-      "\n\016TicketResponse\022\021\n\tticket_id\030\001 \001(\t\022\016\n\006s" +
-      "tatus\030\002 \001(\t\"(\n\023TicketStatusRequest\022\021\n\tti" +
-      "cket_id\030\001 \001(\t\"&\n\024TicketStatusResponse\022\016\n" +
-      "\006status\030\001 \001(\t\"-\n\031TicketStatusBatchRespon" +
-      "se\022\020\n\010statuses\030\001 \003(\t2\211\002\n\020TicketingServic" +
-      "e\022/\n\014CreateTicket\022\016.TicketRequest\032\017.Tick" +
-      "etResponse\022>\n\017GetTicketStatus\022\024.TicketSt" +
-      "atusRequest\032\025.TicketStatusResponse\0227\n\022Cr" +
-      "eateTicketStream\022\016.TicketRequest\032\017.Ticke" +
-      "tResponse0\001\022K\n\025CheckMultipleStatuses\022\024.T" +
-      "icketStatusRequest\032\032.TicketStatusBatchRe" +
-      "sponse(\001B/\n\035com.customersupport.ticketin" +
-      "gB\016TicketingProtob\006proto3"
+      "\n\017ticketing.proto\"J\n\rTicketRequest\022\017\n\007us" +
+      "er_id\030\001 \001(\t\022\031\n\021issue_description\030\002 \001(\t\022\r" +
+      "\n\005token\030c \001(\t\"3\n\016TicketResponse\022\021\n\tticke" +
+      "t_id\030\001 \001(\t\022\016\n\006status\030\002 \001(\t\"7\n\023TicketStat" +
+      "usRequest\022\021\n\tticket_id\030\001 \001(\t\022\r\n\005token\030c " +
+      "\001(\t\"&\n\024TicketStatusResponse\022\016\n\006status\030\001 " +
+      "\001(\t\"-\n\031TicketStatusBatchResponse\022\020\n\010stat" +
+      "uses\030\001 \003(\t2\211\002\n\020TicketingService\022/\n\014Creat" +
+      "eTicket\022\016.TicketRequest\032\017.TicketResponse" +
+      "\022>\n\017GetTicketStatus\022\024.TicketStatusReques" +
+      "t\032\025.TicketStatusResponse\0227\n\022CreateTicket" +
+      "Stream\022\016.TicketRequest\032\017.TicketResponse0" +
+      "\001\022K\n\025CheckMultipleStatuses\022\024.TicketStatu" +
+      "sRequest\032\032.TicketStatusBatchResponse(\001B/" +
+      "\n\035com.customersupport.ticketingB\016Ticketi" +
+      "ngProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3159,7 +3506,7 @@ public final class TicketingProto {
     internal_static_TicketRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_TicketRequest_descriptor,
-        new java.lang.String[] { "UserId", "IssueDescription", });
+        new java.lang.String[] { "UserId", "IssueDescription", "Token", });
     internal_static_TicketResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_TicketResponse_fieldAccessorTable = new
@@ -3171,7 +3518,7 @@ public final class TicketingProto {
     internal_static_TicketStatusRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_TicketStatusRequest_descriptor,
-        new java.lang.String[] { "TicketId", });
+        new java.lang.String[] { "TicketId", "Token", });
     internal_static_TicketStatusResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_TicketStatusResponse_fieldAccessorTable = new
