@@ -1,0 +1,3 @@
+ticketing=localhost:50052
+sentiment=localhost:50053
+
