@@ -31,7 +31,7 @@ public class SentimentServer {
    static class SentimentServiceImpl extends SentimentServiceGrpc.SentimentServiceImplBase{
        @Override
        public StreamObserver<SentimentProto.SentimentRequest> analyzeSentiments(StreamObserver<SentimentProto.SentimentResponse> responseObserver){
-           return new StreamObserver<>(){
+           return new StreamObserver<SentimentProto.SentimentRequest>(){
                 @Override
                 public void onNext(SentimentProto.SentimentRequest request){
                     String phrase = request.getPhrase().toLowerCase(Locale.ROOT);
