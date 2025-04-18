@@ -71,7 +71,7 @@ public class ChatbotServer {
             sentimentStub = SentimentServiceGrpc.newStub(sentimentChannel);
         }
 
-        public void analyzeEmotionStream(List<String> phrases, String userId){
+        public void analyzeEmotionStream(List<String> phrases, String userId, String token){
             CountDownLatch latch = new CountDownLatch(1);
             
             StreamObserver<SentimentProto.SentimentRequest> requestObserver = sentimentStub.analyzeSentiments(new StreamObserver<SentimentProto.SentimentResponse>(){
@@ -97,6 +97,7 @@ public class ChatbotServer {
                 SentimentProto.SentimentRequest request = SentimentProto.SentimentRequest.newBuilder()
                         .setUserId(userId)
                         .setPhrase(phrase)
+                        .setToken(token)
                         .build();
                 requestObserver.onNext(request);
             }
@@ -112,21 +113,33 @@ public class ChatbotServer {
         @Override
         public void sendMessage(ChatbotProto.ChatRequest request,
                                 StreamObserver<ChatbotProto.ChatResponse> responseObserver) {
-
+            
+            try{
+                 //JWT validation
+                if (!JwtUtil.validateToken(request.getToken())) {
+                    responseObserver.onError(Status.UNAUTHENTICATED
+                            .withDescription("Invalid Token").asRuntimeException());
+                return;}
+                System.out.println("📡 TOKEN recibido: " + request.getToken());
+                System.out.println("💡 ticketingStub es null? " + (ticketingStub == null));
+                System.out.println("💡 sentimentStub es null? " + (sentimentStub == null));
+            }catch (Exception e) {
+                   e.printStackTrace();
+                   responseObserver.onError(io.grpc.Status.INTERNAL
+                        .withDescription("Error")
+                        .augmentDescription(e.getMessage())
+                        .asRuntimeException());
+            }
+            
+            
             String userMessage = request.getMessage().toLowerCase();
             String reply;
             boolean escalate = false;
             
             //Get sentiment
-            analyzeEmotionStream(List.of(userMessage), request.getUserId());         
+            analyzeEmotionStream(List.of(userMessage), request.getUserId(),request.getToken());         
             
-            //JWT validation
-            if (!JwtUtil.validateToken(request.getToken())) {
-                responseObserver.onError(Status.UNAUTHENTICATED
-                            .withDescription("Invalid Token").asRuntimeException());
-                return;
-            }
-            
+           
             if (userMessage.contains("hello") || userMessage.contains("hi")) {
                 reply = "Hello! How can I help you?";
                 
@@ -137,13 +150,14 @@ public class ChatbotServer {
                 TicketingProto.TicketRequest ticketRequest = TicketingProto.TicketRequest.newBuilder()
                         .setUserId(request.getUserId())
                         .setIssueDescription(request.getMessage())
+                        .setToken(request.getToken())
                         .build();
                 
                 TicketingProto.TicketResponse ticketResponse = ticketingStub.createTicket(ticketRequest);
                 String ticketId = ticketResponse.getTicketId();
                 
                 
-                reply = "So sorry about that. I created a ticket for you. Ticket ID is: " + ticketId;
+                reply = "So sorry about that. I created a ticket for you. Ticket ID is: " + ticketResponse.getTicketId();
                 
                 
             } else if(userMessage.contains("Thanks") || userMessage.contains("thank you")){
@@ -175,7 +189,7 @@ public class ChatbotServer {
             }
         }
         
-        
+ 
     }
 }
 

@@ -82,11 +82,11 @@ com\customersupport\ticketing\TicketingProto$1.class
 com\customersupport\ticketing\TicketingProto$TicketStatusBatchResponse.class
 com\customersupport\ticketing\TicketingProto$TicketResponseOrBuilder.class
 com\customersupport\ticketing\TicketingProto$TicketResponse.class
-com\customersupport\ticketing\TicketingClient$1.class
 com\customersupport\ticketing\TicketingProto.class
 com\customersupport\sentiment\SentimentProto$SentimentRequest$1.class
 com\customersupport\ticketing\TicketingProto$TicketRequestOrBuilder.class
 com\customersupport\ticketing\TicketingProto$TicketStatusRequest$Builder.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceImplBase.class
 com\customersupport\chatbot\ChatbotProto$ChatResponseOrBuilder.class
+com\customersupport\auth\TokenGenerator.class
 com\customersupport\sentiment\SentimentServiceGrpc$SentimentServiceBaseDescriptorSupplier.class

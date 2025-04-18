@@ -897,6 +897,16 @@ public final class SentimentProto {
      */
     com.google.protobuf.ByteString
         getSentimentBytes();
+
+    /**
+     * <code>string token = 99;</code>
+     */
+    java.lang.String getToken();
+    /**
+     * <code>string token = 99;</code>
+     */
+    com.google.protobuf.ByteString
+        getTokenBytes();
   }
   /**
    * Protobuf type {@code SentimentResponse}
@@ -913,6 +923,7 @@ public final class SentimentProto {
     private SentimentResponse() {
       phrase_ = "";
       sentiment_ = "";
+      token_ = "";
     }
 
     @java.lang.Override
@@ -949,6 +960,12 @@ public final class SentimentProto {
               java.lang.String s = input.readStringRequireUtf8();
 
               sentiment_ = s;
+              break;
+            }
+            case 794: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              token_ = s;
               break;
             }
             default: {
@@ -1051,6 +1068,40 @@ public final class SentimentProto {
       }
     }
 
+    public static final int TOKEN_FIELD_NUMBER = 99;
+    private volatile java.lang.Object token_;
+    /**
+     * <code>string token = 99;</code>
+     */
+    public java.lang.String getToken() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        token_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string token = 99;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTokenBytes() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        token_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1071,6 +1122,9 @@ public final class SentimentProto {
       if (!getSentimentBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, sentiment_);
       }
+      if (!getTokenBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 99, token_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1085,6 +1139,9 @@ public final class SentimentProto {
       }
       if (!getSentimentBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, sentiment_);
+      }
+      if (!getTokenBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(99, token_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1106,6 +1163,8 @@ public final class SentimentProto {
           .equals(other.getPhrase());
       result = result && getSentiment()
           .equals(other.getSentiment());
+      result = result && getToken()
+          .equals(other.getToken());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1121,6 +1180,8 @@ public final class SentimentProto {
       hash = (53 * hash) + getPhrase().hashCode();
       hash = (37 * hash) + SENTIMENT_FIELD_NUMBER;
       hash = (53 * hash) + getSentiment().hashCode();
+      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
+      hash = (53 * hash) + getToken().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1258,6 +1319,8 @@ public final class SentimentProto {
 
         sentiment_ = "";
 
+        token_ = "";
+
         return this;
       }
 
@@ -1286,6 +1349,7 @@ public final class SentimentProto {
         com.customersupport.sentiment.SentimentProto.SentimentResponse result = new com.customersupport.sentiment.SentimentProto.SentimentResponse(this);
         result.phrase_ = phrase_;
         result.sentiment_ = sentiment_;
+        result.token_ = token_;
         onBuilt();
         return result;
       }
@@ -1340,6 +1404,10 @@ public final class SentimentProto {
         }
         if (!other.getSentiment().isEmpty()) {
           sentiment_ = other.sentiment_;
+          onChanged();
+        }
+        if (!other.getToken().isEmpty()) {
+          token_ = other.token_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -1508,6 +1576,75 @@ public final class SentimentProto {
         onChanged();
         return this;
       }
+
+      private java.lang.Object token_ = "";
+      /**
+       * <code>string token = 99;</code>
+       */
+      public java.lang.String getToken() {
+        java.lang.Object ref = token_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          token_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string token = 99;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTokenBytes() {
+        java.lang.Object ref = token_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          token_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string token = 99;</code>
+       */
+      public Builder setToken(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        token_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string token = 99;</code>
+       */
+      public Builder clearToken() {
+        
+        token_ = getDefaultInstance().getToken();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string token = 99;</code>
+       */
+      public Builder setTokenBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        token_ = value;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1582,12 +1719,12 @@ public final class SentimentProto {
     java.lang.String[] descriptorData = {
       "\n\017Sentiment.proto\"B\n\020SentimentRequest\022\017\n" +
       "\007user_id\030\001 \001(\t\022\016\n\006phrase\030\002 \001(\t\022\r\n\005token\030" +
-      "c \001(\t\"6\n\021SentimentResponse\022\016\n\006phrase\030\001 \001" +
-      "(\t\022\021\n\tsentiment\030\002 \001(\t2R\n\020SentimentServic" +
-      "e\022>\n\021AnalyzeSentiments\022\021.SentimentReques" +
-      "t\032\022.SentimentResponse(\0010\001B/\n\035com.custome" +
-      "rsupport.sentimentB\016SentimentProtob\006prot" +
-      "o3"
+      "c \001(\t\"E\n\021SentimentResponse\022\016\n\006phrase\030\001 \001" +
+      "(\t\022\021\n\tsentiment\030\002 \001(\t\022\r\n\005token\030c \001(\t2R\n\020" +
+      "SentimentService\022>\n\021AnalyzeSentiments\022\021." +
+      "SentimentRequest\032\022.SentimentResponse(\0010\001" +
+      "B/\n\035com.customersupport.sentimentB\016Senti" +
+      "mentProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1612,7 +1749,7 @@ public final class SentimentProto {
     internal_static_SentimentResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SentimentResponse_descriptor,
-        new java.lang.String[] { "Phrase", "Sentiment", });
+        new java.lang.String[] { "Phrase", "Sentiment", "Token", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

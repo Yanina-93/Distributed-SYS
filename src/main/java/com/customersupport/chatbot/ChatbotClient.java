@@ -4,6 +4,7 @@
  */
 package com.customersupport.chatbot;
 
+import com.customersupport.auth.JwtUtil;
 /**
  *
  * @author yani_
@@ -13,7 +14,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import com.customersupport.chatbot.ChatbotProto;
 import com.customersupport.chatbot.ChatbotServiceGrpc;
-
+import io.grpc.StatusRuntimeException;
 import java.util.Scanner;
 
 public class ChatbotClient {
@@ -29,7 +30,9 @@ public class ChatbotClient {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("🗨️ You are connected. Please write your message:");
-
+        String userId = "user123";
+        String token = JwtUtil.generateToken(userId); // token is generated at starting point
+        
         while (true) {
             System.out.print("You: ");
             String input = scanner.nextLine();
@@ -40,16 +43,25 @@ public class ChatbotClient {
             }else if (input.equalsIgnoreCase("Exit")) break;
 
             ChatbotProto.ChatRequest request = ChatbotProto.ChatRequest.newBuilder()
-                    .setUserId("user1")
+                    .setUserId(userId)
                     .setMessage(input)
+                    .setToken(token)
                     .build();
+            try{
+                ChatbotProto.ChatResponse response = stub.sendMessage(request);
+                System.out.println("🤖 Chatbot: " + response.getReply());
 
-            ChatbotProto.ChatResponse response = stub.sendMessage(request);
-            System.out.println("🤖 Chatbot: " + response.getReply());
-
-            if (response.getEscalate()) {
-                System.out.println("⚠️ Message needs to scaling to agent support.");
-            }
+                if (response.getEscalate()) {
+                    System.out.println("⚠️ Message needs to scaling to agent support.");
+                }  
+            }catch(StatusRuntimeException e){
+                System.err.println("❌ Error: " + e.getStatus());
+                System.err.println("🔎 Reason: " + e.getCause());
+                System.err.println("🧾 Stacktrace:");
+                e.printStackTrace();
+            }            
+            
+      
         }
 
         channel.shutdown();

@@ -57,7 +57,8 @@ public class SentimentServer {
                     
                     SentimentProto.SentimentResponse response = SentimentProto.SentimentResponse.newBuilder()
                             .setPhrase(phrase)
-                            .setSentiment(result)
+                            .setSentiment(result)  
+                            .setToken(request.getToken())
                             .build();
                     responseObserver.onNext(response);
                     
@@ -83,7 +84,7 @@ public class SentimentServer {
                         System.err.println("X Transcription couldn't be make it: " + e.getMessage());
                     }
                 }
-           };
+           }; 
         
 
        }

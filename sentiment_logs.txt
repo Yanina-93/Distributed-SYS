@@ -22,3 +22,15 @@ User: user1
 Phrase: i need to speak with an agent
 Sentiment: neutral
 ---------------------
+User: user123
+Phrase: problem
+Sentiment: neutral
+---------------------
+User: user123
+Phrase: problem
+Sentiment: neutral
+---------------------
+User: user123
+Phrase: problem
+Sentiment: neutral
+---------------------

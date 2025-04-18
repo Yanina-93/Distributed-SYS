@@ -17,5 +17,6 @@ message SentimentRequest {
 message SentimentResponse {
   string phrase = 1;
   string sentiment = 2;
+  string token = 99;
 }
 
