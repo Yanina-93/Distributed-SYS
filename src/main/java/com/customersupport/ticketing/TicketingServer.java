@@ -69,7 +69,7 @@ public class TicketingServer{
                     .withDescription("Invalid Token").asRuntimeException());
                 return;
             }
-            
+            String ticketId = UUID.randomUUID().toString();
             ///SQLite
             
             try (Connection conn = SQLiteUtil.getConnection()) {
@@ -102,29 +102,43 @@ public class TicketingServer{
             ///responseObserver.onCompleted();
                         
             //WE RE WRITE THE METHOD FOR THE SQL DATA
-            String ticketId = UUID.randomUUID().toString();
-            try(Connection conn = SQLiteUtil.getConnection()){
-                String sql = "INSERT INTO tickets (id, user_id, description, status) VALUES (?, ?, ?, ?)";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setObject(1, UUID.fromString(sql));
+
+            try (Connection conn = SQLiteUtil.getConnection()) {
+                // create table if it doesnt exists
+                String createTableSql = "CREATE TABLE IF NOT EXISTS tickets (" +
+                        "id TEXT PRIMARY KEY, " +
+                        "user_id TEXT NOT NULL, " +
+                        "description TEXT NOT NULL, " +
+                        "status TEXT NOT NULL)";
+                conn.createStatement().execute(createTableSql);
+
+                // new ticket
+                String insertSql = "INSERT INTO tickets (id, user_id, description, status) VALUES (?, ?, ?, ?)";
+                PreparedStatement ps = conn.prepareStatement(insertSql);
+                ps.setString(1, ticketId);
                 ps.setString(2, request.getUserId());
                 ps.setString(3, request.getIssueDescription());
                 ps.setString(4, "Open");
                 ps.executeUpdate();
-                
+
+                // send response
                 TicketingProto.TicketResponse response = TicketingProto.TicketResponse.newBuilder()
                         .setTicketId(ticketId)
                         .setStatus("Open")
                         .build();
-                
+
                 responseObserver.onNext(response);
-                responseObserver.onCompleted();                
-            } catch(SQLException e){
-                responseObserver.onError(Status.INTERNAL.withDescription("Error in saving database")
-                .augmentDescription(e.getMessage())
-                .asRuntimeException());
+                responseObserver.onCompleted();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                responseObserver.onError(io.grpc.Status.INTERNAL
+                        .withDescription("Error in saving data")
+                        .augmentDescription(e.getMessage())
+                        .asRuntimeException());
             }
         }
+    
 
         //RPC Unary -- ticket's status
         @Override
@@ -152,105 +166,152 @@ public class TicketingServer{
             
             ///WE REWRITE THE METHOD FOR THE DATABASE
             
-            try (Connection conn = SQLiteUtil.getConnection()) {
-                String sql = "SELECT status FROM tickets WHERE id = ?";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setObject(1, UUID.fromString(request.getTicketId()));
-                ResultSet rs = ps.executeQuery();
+           try (Connection conn = SQLiteUtil.getConnection()) {
+            
+            String createTableSql = "CREATE TABLE IF NOT EXISTS tickets (" +
+                    "id TEXT PRIMARY KEY, " +
+                    "user_id TEXT NOT NULL, " +
+                    "description TEXT NOT NULL, " +
+                    "status TEXT NOT NULL)";
+            conn.createStatement().execute(createTableSql);
 
-                String status = rs.next() ? rs.getString("status") : "No encontrado";
+            
+            String selectSql = "SELECT status FROM tickets WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(selectSql);
+            ps.setString(1, request.getTicketId());
 
-                TicketingProto.TicketStatusResponse response = TicketingProto.TicketStatusResponse.newBuilder()
+            ResultSet rs = ps.executeQuery();
+
+            String status;
+            if (rs.next()) {
+                status = rs.getString("status");
+            } else {
+                status = "No encontrado";
+            }
+
+            //send response
+            TicketingProto.TicketStatusResponse response = TicketingProto.TicketStatusResponse.newBuilder()
                     .setStatus(status)
                     .build();
 
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
 
             } catch (SQLException e) {
-                responseObserver.onError(Status.INTERNAL
-                    .withDescription("Error al consultar la base de datos")
-                    .augmentDescription(e.getMessage())
-                    .asRuntimeException());
+                e.printStackTrace();
+                responseObserver.onError(io.grpc.Status.INTERNAL
+                        .withDescription("Error al consultar la base de datos")
+                        .augmentDescription(e.getMessage())
+                        .asRuntimeException());
             }
         }
         
         //RPC Server Streaming --Multiple tickets
-        @Override
-        public void createTicketStream(TicketingProto.TicketRequest request, StreamObserver<TicketingProto.TicketResponse> responseObserver){
+        
+        public StreamObserver<TicketingProto.TicketRequest> createTicketStream(final StreamObserver<TicketingProto.TicketResponse> responseObserver){
             
-            //JWT Validation 
-            if (!JwtUtil.validateToken(request.getToken())) {
-                responseObserver.onError(Status.UNAUTHENTICATED
-                    .withDescription("Invalid Token").asRuntimeException());
-                return;
-            }            
-            for(int i = 0; i < 3; i ++){ //simulation mulple tickets created
-                String ticketId = UUID.randomUUID().toString();
-                Ticket ticket = new Ticket(ticketId, request.getUserId(), request.getIssueDescription() + " #" + (i+1));
-                ticketList.add(ticket);
-            
-                System.out.println("New ticket ID: "+ ticketId + " |User: " + request.getUserId());
+            return new StreamObserver<TicketingProto.TicketRequest>(){
+                StringBuilder summary = new StringBuilder();
+                String token = null;
 
-                TicketingProto.TicketResponse response = TicketingProto.TicketResponse.newBuilder()
-                        .setTicketId(ticketId)
-                        .setStatus(ticket.status)
-                        .build();
-                responseObserver.onNext(response);
-                
-                try{
-                    Thread.sleep(1000); // one sec between tickets
-                } catch(InterruptedException e){
-                    e.printStackTrace();
+                @Override
+                public void onNext(TicketingProto.TicketRequest request) {
+                    if (token == null) token = request.getToken();
+
+                    if (!JwtUtil.validateToken(request.getToken())) {
+                        responseObserver.onError(io.grpc.Status.UNAUTHENTICATED
+                                .withDescription("Invalid Token")
+                                .asRuntimeException());
+                        return;
+                    }
+
+                    String ticketId = UUID.randomUUID().toString();
+
+                    try (Connection conn = SQLiteUtil.getConnection()) {
+                        String insertSql = "INSERT INTO tickets (id, user_id, description, status) VALUES (?, ?, ?, ?)";
+                        PreparedStatement ps = conn.prepareStatement(insertSql);
+                        ps.setString(1, ticketId);
+                        ps.setString(2, request.getUserId());
+                        ps.setString(3, request.getIssueDescription());
+                        ps.setString(4, "Open");
+                        ps.executeUpdate();
+
+                        summary.append("Created: ").append(ticketId).append("\n");
+
+                    } catch (SQLException e) {
+                        summary.append("❌ Error: ").append(e.getMessage()).append("\n");
+                    }
                 }
-       
-            }
-            responseObserver.onCompleted();
+
+                @Override
+                public void onError(Throwable t) {
+                    System.err.println("X Error : " + t.getMessage());
+                }
+
+                @Override
+                public void onCompleted() {
+                    TicketingProto.TicketResponse response = TicketingProto.TicketResponse.newBuilder()
+                            .setTicketId("Multiple")
+                            .setStatus(summary.toString())
+                            .build();
+
+                    responseObserver.onNext(response);
+                    responseObserver.onCompleted();
+                }
+            };
 
         }
         
         //RPC Client Streaming -- Multiple checking status       
         @Override
         public StreamObserver<TicketingProto.TicketStatusRequest> checkMultipleStatuses ( final StreamObserver<TicketingProto.TicketStatusBatchResponse> responseObserver){
-            
-            List<String> statuses = new ArrayList<>();
-            
+                       
             return new StreamObserver<TicketingProto.TicketStatusRequest>(){
+                String token = null;
+                List<String> statuses = new ArrayList<>();
+                
                 @Override
-                public void onNext(TicketingProto.TicketStatusRequest request){
-                    //JWT Validation 
+                public void onNext(TicketingProto.TicketStatusRequest request) {
+                    if (token == null){ token = request.getToken();}
+
                     if (!JwtUtil.validateToken(request.getToken())) {
-                        responseObserver.onError(Status.UNAUTHENTICATED
-                            .withDescription("Invalid Token").asRuntimeException());
+                        responseObserver.onError(io.grpc.Status.UNAUTHENTICATED
+                                .withDescription("Invalid token")
+                                .asRuntimeException());
                         return;
                     }
-                    String status = "Not found.";
-                    
-                    for(Ticket t : ticketList) {
-                        if(t.id.equals(request.getTicketId())){
-                            status = t.status;
-                            break;
-                        }
+
+                    try (Connection conn = SQLiteUtil.getConnection()) {
+                        String selectSql = "SELECT status FROM tickets WHERE id = ?";
+                        PreparedStatement ps = conn.prepareStatement(selectSql);
+                        ps.setString(1, request.getTicketId());
+                        ResultSet rs = ps.executeQuery();
+
+                        String status = rs.next()
+                                ? "Ticket " + request.getTicketId() + ": " + rs.getString("status")
+                                : "Ticket " + request.getTicketId() + ": No encontrado";
+                        
+                        statuses.add(status);
+                    } catch(SQLException e){
+                        statuses.add("Error consultando ticket " + request.getTicketId() + ": " + e.getMessage());
                     }
-                    
-                    statuses.add("ID: " + request.getTicketId() + "| Status: " + status);
                 }
-                
+
                 @Override
-                public void onError(Throwable t){
-                    System.err.println("Error in CLient Streaming: "+ t.getMessage());
+                public void onError(Throwable t) {
+                    System.err.println("X Error in multiple checking: " + t.getMessage());
                 }
-                
-                
+
                 @Override
-                public void onCompleted(){
-                    TicketingProto.TicketStatusBatchResponse response = TicketingProto.TicketStatusBatchResponse.newBuilder()
+                public void onCompleted() {
+                    TicketingProto.TicketStatusBatchResponse response =
+                    TicketingProto.TicketStatusBatchResponse.newBuilder()
                             .addAllStatuses(statuses)
                             .build();
+
                     responseObserver.onNext(response);
-                    responseObserver.onCompleted();                    
-                }           
-            
+                    responseObserver.onCompleted();
+                }
             };
         
         }
