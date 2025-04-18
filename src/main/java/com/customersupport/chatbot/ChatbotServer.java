@@ -119,9 +119,9 @@ public class ChatbotServer {
                     responseObserver.onError(Status.UNAUTHENTICATED
                             .withDescription("Invalid Token").asRuntimeException());
                 return;}
-                System.out.println("📡 TOKEN : " + request.getToken());
-                System.out.println("💡 ticketingStub es null? " + (ticketingStub == null));
-                System.out.println("💡 sentimentStub es null? " + (sentimentStub == null));
+                System.out.println("TOKEN : " + request.getToken());
+                System.out.println("ticketingStub es null? " + (ticketingStub == null));
+                System.out.println("sentimentStub es null? " + (sentimentStub == null));
             }catch (Exception e) {
                    e.printStackTrace();
                    responseObserver.onError(io.grpc.Status.INTERNAL
@@ -142,7 +142,7 @@ public class ChatbotServer {
             if (userMessage.contains("hello") || userMessage.contains("hi")) {
                 reply = "Hello! How can I help you?";
                 
-            } else if (userMessage.contains("problem") || userMessage.contains("error")|| userMessage.contains("mistake")|| userMessage.contains("missunderstanding")) {
+            } else if (userMessage.contains("problem") || userMessage.contains("error")|| userMessage.contains("mistake")|| userMessage.contains("missunderstanding")|| userMessage.contains("help")|| userMessage.contains("urgent")) {
                 escalate = true;
                 
                 //Now we create the ticket for the request
