@@ -46,9 +46,9 @@ public class SentimentServer {
                     String phrase = request.getPhrase().toLowerCase(Locale.ROOT);
                     String result;
                     
-                    if(phrase.contains("good") || phrase.contains("excelent") || phrase.contains("happy")){
+                    if(phrase.contains("good") || phrase.contains("excelent") || phrase.contains("happy")|| phrase.contains("excited") || phrase.contains("stunning")|| phrase.contains("grand")){
                         result = "positive";                        
-                    } else if(phrase.contains("bad") || phrase.contains("terrible") || phrase.contains("sad")){
+                    } else if(phrase.contains("bad") || phrase.contains("terrible") || phrase.contains("sad")|| phrase.contains("angry") ||phrase.contains("dissapointed")){
                         result = "negative";
                     } else{
                         result = "neutral";

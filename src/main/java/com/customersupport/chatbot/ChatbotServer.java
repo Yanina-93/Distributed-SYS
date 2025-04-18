@@ -142,7 +142,7 @@ public class ChatbotServer {
             if (userMessage.contains("hello") || userMessage.contains("hi")) {
                 reply = "Hello! How can I help you?";
                 
-            } else if (userMessage.contains("problem") || userMessage.contains("error")) {
+            } else if (userMessage.contains("problem") || userMessage.contains("error")|| userMessage.contains("mistake")|| userMessage.contains("missunderstanding")) {
                 escalate = true;
                 
                 //Now we create the ticket for the request
