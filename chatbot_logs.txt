@@ -58,3 +58,19 @@ User: 456
 Message: angry problem
 Response: So sorry about that. I created a ticket for you. Ticket ID is: 4f84aa3f-d2b6-4d9c-9fb7-5824762113ce
 --------------------- 
+User: 1234
+Message: problem
+Response: So sorry about that. I created a ticket for you. Ticket ID is: 35edfdae-ac15-4269-a2e9-7651ed7acd42
+--------------------- 
+User: 8989
+Message: angry problem
+Response: So sorry about that. I created a ticket for you. Ticket ID is: 575cc28e-5c62-4e4a-9ec4-7c1ba69b6e12
+--------------------- 
+User: test_user
+Message: I am very sad and is terrible
+Response: Sorry, I couldn't understand your message, Can you write it again?
+--------------------- 
+User: test_user
+Message: I am very sad because of an error
+Response: So sorry about that. I created a ticket for you. Ticket ID is: 64fae51e-bb2c-437b-bab6-87ffc70ac752
+--------------------- 

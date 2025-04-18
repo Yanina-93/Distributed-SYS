@@ -200,7 +200,7 @@ public class TicketingServer{
             } catch (SQLException e) {
                 e.printStackTrace();
                 responseObserver.onError(io.grpc.Status.INTERNAL
-                        .withDescription("Error al consultar la base de datos")
+                        .withDescription("Error consulting data base")
                         .augmentDescription(e.getMessage())
                         .asRuntimeException());
             }
@@ -289,11 +289,11 @@ public class TicketingServer{
 
                         String status = rs.next()
                                 ? "Ticket " + request.getTicketId() + ": " + rs.getString("status")
-                                : "Ticket " + request.getTicketId() + ": No encontrado";
+                                : "Ticket " + request.getTicketId() + ": Not found";
                         
                         statuses.add(status);
                     } catch(SQLException e){
-                        statuses.add("Error consultando ticket " + request.getTicketId() + ": " + e.getMessage());
+                        statuses.add("Error consulting ticket " + request.getTicketId() + ": " + e.getMessage());
                     }
                 }
 

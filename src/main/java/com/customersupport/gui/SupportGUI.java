@@ -42,7 +42,7 @@ public class SupportGUI extends JFrame {
     public SupportGUI() {
         // window
         setTitle("Support GUI");
-        setSize(550, 450);
+        setSize(650, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -87,7 +87,7 @@ public class SupportGUI extends JFrame {
         sendButton = new JButton("Send to Chatbot");
         statusButton = new JButton("Check Ticket Status");
         JButton multiCheckButton = new JButton("Check Multiple Tickets");
-        JButton closeTicketButton = new JButton("closed ticket");
+        JButton closeTicketButton = new JButton("close ticket");
 
         buttonPanel.add(sendButton);
         buttonPanel.add(statusButton);

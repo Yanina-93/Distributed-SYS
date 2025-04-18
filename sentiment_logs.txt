@@ -54,3 +54,35 @@ User: 456
 Phrase: angry problem
 Sentiment: neutral
 ---------------------
+User: 1234
+Phrase: problem
+Sentiment: neutral
+---------------------
+User: 1234
+Phrase: problem
+Sentiment: neutral
+---------------------
+User: 8989
+Phrase: angry problem
+Sentiment: negative
+---------------------
+User: 8989
+Phrase: angry problem
+Sentiment: negative
+---------------------
+User: test_user
+Phrase: i am very sad and is terrible
+Sentiment: negative
+---------------------
+User: test_user
+Phrase: i am very sad and is terrible
+Sentiment: negative
+---------------------
+User: test_user
+Phrase: i am very sad because of an error
+Sentiment: negative
+---------------------
+User: test_user
+Phrase: i am very sad because of an error
+Sentiment: negative
+---------------------
