@@ -42,3 +42,7 @@ User: user1
 Message: i need to speak with an agent
 Response: Sorry, I couldn't understand your message, Can you write it again?
 --------------------- 
+User: user_test
+Message: I have a terrible problem
+Response: So sorry about that. I created a ticket for you. Ticket ID is: b5c3ea46-0567-4c85-b427-2ef86ceabbc9
+--------------------- 

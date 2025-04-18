@@ -120,7 +120,7 @@ public class ChatbotServer {
                     responseObserver.onError(Status.UNAUTHENTICATED
                             .withDescription("Invalid Token").asRuntimeException());
                 return;}
-                System.out.println("📡 TOKEN recibido: " + request.getToken());
+                System.out.println("📡 TOKEN : " + request.getToken());
                 System.out.println("💡 ticketingStub es null? " + (ticketingStub == null));
                 System.out.println("💡 sentimentStub es null? " + (sentimentStub == null));
             }catch (Exception e) {

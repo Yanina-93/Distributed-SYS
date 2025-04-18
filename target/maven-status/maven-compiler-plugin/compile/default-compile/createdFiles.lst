@@ -25,6 +25,7 @@ com\customersupport\ticketing\TicketingClientStream$1.class
 com\customersupport\sentiment\SentimentProto$1.class
 com\customersupport\ticketing\TicketingProto$TicketStatusRequestOrBuilder.class
 com\customersupport\sentiment\SentimentProto$SentimentResponse.class
+com\customersupport\ticketing\TicketingServer$TicketingServiceImpl$2.class
 com\customersupport\ticketing\TicketingServiceGrpc$TicketingServiceMethodDescriptorSupplier.class
 com\customersupport\chatbot\ChatbotProto$1.class
 com\customersupport\sentiment\SentimentServiceGrpc.class
@@ -88,5 +89,6 @@ com\customersupport\ticketing\TicketingProto$TicketRequestOrBuilder.class
 com\customersupport\ticketing\TicketingProto$TicketStatusRequest$Builder.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceImplBase.class
 com\customersupport\chatbot\ChatbotProto$ChatResponseOrBuilder.class
+com\customersupport\test\FullSystemTest.class
 com\customersupport\auth\TokenGenerator.class
 com\customersupport\sentiment\SentimentServiceGrpc$SentimentServiceBaseDescriptorSupplier.class
