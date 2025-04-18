@@ -38,3 +38,19 @@ User: user_test
 Phrase: i have a terrible problem
 Sentiment: negative
 ---------------------
+User: 1234
+Phrase: problem
+Sentiment: neutral
+---------------------
+User: 1234
+Phrase: problem
+Sentiment: neutral
+---------------------
+User: 456
+Phrase: angry problem
+Sentiment: neutral
+---------------------
+User: 456
+Phrase: angry problem
+Sentiment: neutral
+---------------------
