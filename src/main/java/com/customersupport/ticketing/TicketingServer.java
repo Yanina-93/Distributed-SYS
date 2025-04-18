@@ -26,7 +26,7 @@ import java.sql.ResultSet;
 import com.customersupport.auth.JwtUtil;
 
 //SQL
-import com.customersupport.ticketing.MySQLUtil;
+
 
 
 public class TicketingServer{
@@ -70,6 +70,23 @@ public class TicketingServer{
                 return;
             }
             
+            ///SQLite
+            
+            try (Connection conn = SQLiteUtil.getConnection()) {
+                 String sql = "CREATE TABLE IF NOT EXISTS tickets (" +
+                                "id TEXT PRIMARY KEY, " +
+                                "user_id TEXT NOT NULL, " +
+                                "description TEXT NOT NULL, " +
+                                "status TEXT NOT NULL" +
+                                ")";
+                conn.createStatement().execute(sql);
+                System.out.println("✅ table for tickets ready");
+            } catch (SQLException e) {
+                System.err.println("❌ Error " + e.getMessage());
+            }
+
+            
+            
             ///String ticketId = UUID.randomUUID().toString();
             
             ///Ticket ticket = new Ticket(ticketId, request.getUserId(), request.getIssueDescription());
@@ -86,7 +103,7 @@ public class TicketingServer{
                         
             //WE RE WRITE THE METHOD FOR THE SQL DATA
             String ticketId = UUID.randomUUID().toString();
-            try(Connection conn = MySQLUtil.getConnection()){
+            try(Connection conn = SQLiteUtil.getConnection()){
                 String sql = "INSERT INTO tickets (id, user_id, description, status) VALUES (?, ?, ?, ?)";
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setObject(1, UUID.fromString(sql));
@@ -135,7 +152,7 @@ public class TicketingServer{
             
             ///WE REWRITE THE METHOD FOR THE DATABASE
             
-            try (Connection conn = MySQLUtil.getConnection()) {
+            try (Connection conn = SQLiteUtil.getConnection()) {
                 String sql = "SELECT status FROM tickets WHERE id = ?";
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setObject(1, UUID.fromString(request.getTicketId()));

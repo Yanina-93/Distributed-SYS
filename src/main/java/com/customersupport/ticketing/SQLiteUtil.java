@@ -8,17 +8,16 @@ package com.customersupport.ticketing;
  *
  * @author yani_
  */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySQLUtil {
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/support_db";
-    private static final String USER = "root";
-    private static final String PASSWORD = "Baby2005!!";
+public class SQLiteUtil {
+    private static final String URL = "jdbc:sqlite:ticketing.db";
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        return DriverManager.getConnection(URL);
     }
 }
 
