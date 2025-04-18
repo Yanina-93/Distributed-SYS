@@ -155,6 +155,38 @@ public final class TicketingServiceGrpc {
      return getCheckMultipleStatusesMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.customersupport.ticketing.TicketingProto.TicketCloseRequest,
+      com.customersupport.ticketing.TicketingProto.TicketCloseResponse> getCloseTicketMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "CloseTicket",
+      requestType = com.customersupport.ticketing.TicketingProto.TicketCloseRequest.class,
+      responseType = com.customersupport.ticketing.TicketingProto.TicketCloseResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.customersupport.ticketing.TicketingProto.TicketCloseRequest,
+      com.customersupport.ticketing.TicketingProto.TicketCloseResponse> getCloseTicketMethod() {
+    io.grpc.MethodDescriptor<com.customersupport.ticketing.TicketingProto.TicketCloseRequest, com.customersupport.ticketing.TicketingProto.TicketCloseResponse> getCloseTicketMethod;
+    if ((getCloseTicketMethod = TicketingServiceGrpc.getCloseTicketMethod) == null) {
+      synchronized (TicketingServiceGrpc.class) {
+        if ((getCloseTicketMethod = TicketingServiceGrpc.getCloseTicketMethod) == null) {
+          TicketingServiceGrpc.getCloseTicketMethod = getCloseTicketMethod = 
+              io.grpc.MethodDescriptor.<com.customersupport.ticketing.TicketingProto.TicketCloseRequest, com.customersupport.ticketing.TicketingProto.TicketCloseResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "TicketingService", "CloseTicket"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.customersupport.ticketing.TicketingProto.TicketCloseRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.customersupport.ticketing.TicketingProto.TicketCloseResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new TicketingServiceMethodDescriptorSupplier("CloseTicket"))
+                  .build();
+          }
+        }
+     }
+     return getCloseTicketMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -219,6 +251,16 @@ public final class TicketingServiceGrpc {
       return asyncUnimplementedStreamingCall(getCheckMultipleStatusesMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     *Close ticket
+     * </pre>
+     */
+    public void closeTicket(com.customersupport.ticketing.TicketingProto.TicketCloseRequest request,
+        io.grpc.stub.StreamObserver<com.customersupport.ticketing.TicketingProto.TicketCloseResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getCloseTicketMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -249,6 +291,13 @@ public final class TicketingServiceGrpc {
                 com.customersupport.ticketing.TicketingProto.TicketStatusRequest,
                 com.customersupport.ticketing.TicketingProto.TicketStatusBatchResponse>(
                   this, METHODID_CHECK_MULTIPLE_STATUSES)))
+          .addMethod(
+            getCloseTicketMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.customersupport.ticketing.TicketingProto.TicketCloseRequest,
+                com.customersupport.ticketing.TicketingProto.TicketCloseResponse>(
+                  this, METHODID_CLOSE_TICKET)))
           .build();
     }
   }
@@ -311,6 +360,17 @@ public final class TicketingServiceGrpc {
       return asyncClientStreamingCall(
           getChannel().newCall(getCheckMultipleStatusesMethod(), getCallOptions()), responseObserver);
     }
+
+    /**
+     * <pre>
+     *Close ticket
+     * </pre>
+     */
+    public void closeTicket(com.customersupport.ticketing.TicketingProto.TicketCloseRequest request,
+        io.grpc.stub.StreamObserver<com.customersupport.ticketing.TicketingProto.TicketCloseResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getCloseTicketMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -358,6 +418,16 @@ public final class TicketingServiceGrpc {
       return blockingServerStreamingCall(
           getChannel(), getCreateTicketStreamMethod(), getCallOptions(), request);
     }
+
+    /**
+     * <pre>
+     *Close ticket
+     * </pre>
+     */
+    public com.customersupport.ticketing.TicketingProto.TicketCloseResponse closeTicket(com.customersupport.ticketing.TicketingProto.TicketCloseRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getCloseTicketMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -396,12 +466,24 @@ public final class TicketingServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getGetTicketStatusMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     *Close ticket
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.customersupport.ticketing.TicketingProto.TicketCloseResponse> closeTicket(
+        com.customersupport.ticketing.TicketingProto.TicketCloseRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getCloseTicketMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CREATE_TICKET = 0;
   private static final int METHODID_GET_TICKET_STATUS = 1;
   private static final int METHODID_CREATE_TICKET_STREAM = 2;
-  private static final int METHODID_CHECK_MULTIPLE_STATUSES = 3;
+  private static final int METHODID_CLOSE_TICKET = 3;
+  private static final int METHODID_CHECK_MULTIPLE_STATUSES = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -431,6 +513,10 @@ public final class TicketingServiceGrpc {
         case METHODID_CREATE_TICKET_STREAM:
           serviceImpl.createTicketStream((com.customersupport.ticketing.TicketingProto.TicketRequest) request,
               (io.grpc.stub.StreamObserver<com.customersupport.ticketing.TicketingProto.TicketResponse>) responseObserver);
+          break;
+        case METHODID_CLOSE_TICKET:
+          serviceImpl.closeTicket((com.customersupport.ticketing.TicketingProto.TicketCloseRequest) request,
+              (io.grpc.stub.StreamObserver<com.customersupport.ticketing.TicketingProto.TicketCloseResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -500,6 +586,7 @@ public final class TicketingServiceGrpc {
               .addMethod(getGetTicketStatusMethod())
               .addMethod(getCreateTicketStreamMethod())
               .addMethod(getCheckMultipleStatusesMethod())
+              .addMethod(getCloseTicketMethod())
               .build();
         }
       }

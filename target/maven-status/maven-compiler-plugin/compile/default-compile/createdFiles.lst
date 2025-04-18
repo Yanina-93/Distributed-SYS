@@ -5,11 +5,13 @@ com\customersupport\sentiment\SentimentClient$1.class
 com\customersupport\ticketing\TicketingProto$TicketStatusBatchResponseOrBuilder.class
 com\customersupport\chatbot\ChatbotProto$ChatRequest.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceStub.class
+com\customersupport\ticketing\TicketingProto$TicketCloseResponseOrBuilder.class
 com\customersupport\ticketing\TicketingProto$TicketStatusResponse$Builder.class
 com\customersupport\ticketing\TicketingServiceGrpc$TicketingServiceFutureStub.class
 com\customersupport\ticketing\TicketingServiceGrpc$TicketingServiceBaseDescriptorSupplier.class
 com\customersupport\sentiment\SentimentProto$1.class
 com\customersupport\ticketing\TicketingServer$TicketingServiceImpl$2.class
+com\customersupport\ticketing\TicketingProto$TicketCloseRequestOrBuilder.class
 com\customersupport\chatbot\ChatbotProto$1.class
 com\customersupport\sentiment\SentimentServer$SentimentServiceImpl.class
 com\customersupport\ticketing\TicketingProto$TicketStatusRequest$1.class
@@ -36,6 +38,7 @@ com\customersupport\sentiment\SentimentServiceGrpc$SentimentServiceMethodDescrip
 com\customersupport\sentiment\SentimentServer.class
 com\customersupport\sentiment\SentimentProto$SentimentResponse$1.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceFutureStub.class
+com\customersupport\ticketing\TicketingProto$TicketCloseRequest.class
 com\customersupport\gui\SupportGUI.class
 com\customersupport\ticketing\TicketingProto$TicketStatusBatchResponse$1.class
 com\customersupport\chatbot\ChatbotProto$ChatRequest$1.class
@@ -43,9 +46,12 @@ com\customersupport\sentiment\SentimentProto$SentimentRequestOrBuilder.class
 com\customersupport\ticketing\TicketingProto$1.class
 com\customersupport\ticketing\TicketingProto.class
 com\customersupport\chatbot\ChatbotProto$ChatResponseOrBuilder.class
+com\customersupport\ticketing\TicketingProto$TicketCloseRequest$1.class
 com\customersupport\test\FullSystemTest.class
 com\customersupport\auth\TokenGenerator.class
 com\customersupport\sentiment\SentimentServiceGrpc$SentimentServiceBaseDescriptorSupplier.class
+com\customersupport\ticketing\TicketingProto$TicketCloseResponse$1.class
+com\customersupport\ticketing\TicketingProto$TicketCloseResponse$Builder.class
 com\customersupport\chatbot\ChatbotProto.class
 com\customersupport\chatbot\ChatbotServer.class
 com\customersupport\chatbot\ChatbotProto$ChatResponse$1.class
@@ -68,6 +74,8 @@ com\customersupport\sentiment\SentimentServiceGrpc.class
 com\customersupport\ticketing\TicketingServer$TicketingServiceImpl$1.class
 com\customersupport\sentiment\SentimentServiceGrpc$SentimentServiceImplBase.class
 com\customersupport\ticketing\TicketingServiceGrpc$MethodHandlers.class
+com\customersupport\ticketing\TicketingProto$TicketCloseResponse.class
+com\customersupport\ticketing\TicketingProto$TicketCloseRequest$Builder.class
 com\customersupport\sentiment\SentimentServiceGrpc$MethodHandlers.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceFileDescriptorSupplier.class
 com\customersupport\chatbot\ChatbotServiceGrpc$ChatbotServiceBlockingStub.class
@@ -91,7 +99,6 @@ com\customersupport\ticketing\TicketingProto$TicketRequest.class
 com\customersupport\ticketing\TicketingProto$TicketStatusBatchResponse.class
 com\customersupport\ticketing\TicketingProto$TicketResponseOrBuilder.class
 com\customersupport\ticketing\TicketingProto$TicketResponse.class
-com\customersupport\gui\SupportGUI$3.class
 com\customersupport\sentiment\SentimentProto$SentimentRequest$1.class
 com\customersupport\ticketing\TicketingProto$TicketRequestOrBuilder.class
 com\customersupport\ticketing\TicketingProto$TicketStatusRequest$Builder.class

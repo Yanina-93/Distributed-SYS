@@ -13,8 +13,11 @@ service TicketingService {
 
   // Client Streaming
   rpc CheckMultipleStatuses (stream TicketStatusRequest) returns (TicketStatusBatchResponse);
-}
 
+
+  //Close ticket
+  rpc CloseTicket (TicketCloseRequest) returns (TicketCloseResponse);
+}
 message TicketRequest {
   string user_id = 1;
   string issue_description = 2;
@@ -39,3 +42,11 @@ message TicketStatusBatchResponse {
   repeated string statuses = 1;
 }
 
+message TicketCloseRequest {
+  string ticket_id = 1;
+  string token = 99;
+}
+
+message TicketCloseResponse {
+  string message = 1;
+}

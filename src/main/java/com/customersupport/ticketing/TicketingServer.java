@@ -315,5 +315,42 @@ public class TicketingServer{
             };
         
         }
+        @Override
+        public void closeTicket(TicketingProto.TicketCloseRequest request,
+                                StreamObserver<TicketingProto.TicketCloseResponse> responseObserver) {
+
+            if (!JwtUtil.validateToken(request.getToken())) {
+                responseObserver.onError(io.grpc.Status.UNAUTHENTICATED
+                        .withDescription("Invalid token")
+                        .asRuntimeException());
+                return;
+            }
+
+            try (Connection conn = SQLiteUtil.getConnection()) {
+                String sql = "UPDATE tickets SET status = ? WHERE id = ?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, "Closed");
+                ps.setString(2, request.getTicketId());
+
+                int updated = ps.executeUpdate();
+
+                String message = (updated > 0) ? "✅ Ticket closed succesfully"
+                                               : "❌ Ticket not found";
+
+                TicketingProto.TicketCloseResponse response = TicketingProto.TicketCloseResponse.newBuilder()
+                        .setMessage(message)
+                        .build();
+
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+
+            } catch (SQLException e) {
+                responseObserver.onError(io.grpc.Status.INTERNAL
+                        .withDescription("Error in database")
+                        .augmentDescription(e.getMessage())
+                        .asRuntimeException());
+            }
+        }
+
     }
 }
